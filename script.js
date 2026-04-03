@@ -8,7 +8,7 @@ var inputValue = document.getElementById('input').value
 var indexToBeUptade = null
 function getLocalStorageData(){ 
     var getTodosData = window.localStorage.getItem('todos');
-    getTodosData = JSON.parse(getTodosData);
+        getTodosData = JSON.parse(getTodosData);
     console.log(getTodosData);
     if(getTodosData !== null){
         todos = getTodosData;
@@ -26,6 +26,7 @@ function addTodo(){
     createdAt: new Date()
   }
   todos.unshift(todoObj)
+  window.localStorage.setItem("todos", JSON.stringify(todos))
   
   input.value = ""
   render()
@@ -40,8 +41,9 @@ function deleteTodo(id) {
   for (let i = 0; i < todos.length; i++) {
     if (id == todos[i].id) {
       todos.splice(i,1)
-      window.localStorage.setItem("todos", JSON.stringify(todos))
       render()
+      window.localStorage.removeItem
+      window.localStorage.setItem("todos", JSON.stringify(todos))
       break
     }
   }
