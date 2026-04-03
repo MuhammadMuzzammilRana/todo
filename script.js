@@ -4,7 +4,18 @@ var add = document.getElementById('add')
 var upd = document.getElementById('upd')
 var todos = []
 var todoToBeEdit = null
+var inputValue = document.getElementById('input').value
 var indexToBeUptade = null
+function getLocalStorageData(){ 
+    var getTodosData = window.localStorage.getItem('todos');
+    getTodosData = JSON.parse(getTodosData);
+    console.log(getTodosData);
+    if(getTodosData !== null){
+        todos = getTodosData;
+    }
+    render()
+}
+getLocalStorageData();
 function addTodo(){
   if (input.value == "") {
     alert('Please fill out the input')
@@ -15,6 +26,7 @@ function addTodo(){
     createdAt: new Date()
   }
   todos.unshift(todoObj)
+  
   input.value = ""
   render()
 }
@@ -28,6 +40,7 @@ function deleteTodo(id) {
   for (let i = 0; i < todos.length; i++) {
     if (id == todos[i].id) {
       todos.splice(i,1)
+      window.localStorage.setItem("todos", JSON.stringify(todos))
       render()
       break
     }
@@ -49,6 +62,7 @@ function editTodo(id) {
 function updateTodo() {
   todos[indexToBeUptade].todoValue = input.value
   input.value = ""
+  window.localStorage.setItem("todos", JSON.stringify(todos))
   upd.style.display = 'none'
   add.style.display = 'inline'
   render()
